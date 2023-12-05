@@ -4,6 +4,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class RegisterPage extends BasePage{
 
+    private By registerLink = By.xpath("//a[normalize-space()='Register']");
     private By  firstName = By.id("customer.firstName");
     private By  lastName = By.id("customer.lastName");
     private By  address = By.id("customer.address.street");
@@ -16,7 +17,7 @@ public class RegisterPage extends BasePage{
     private By  password = By.id("customer.password");
     private By  passwordConfirm = By.id("repeatedPassword");
 
-    private By registerButton = By.xpath("//a[normalize-space()='Register']\n");
+    private By registerSendButton = By.xpath("//input[@value='Register']");
 
     private By okLoginMessage = By.xpath("//*[@id=\"rightPanel\"]/p");
 
@@ -27,72 +28,63 @@ public class RegisterPage extends BasePage{
         super(driver, wait);
     }
 
-    public String obtenerTituloRegistro() throws InterruptedException {
-        System.out.println("Me encuentro en la página de Registro: " + getText(titulo));
-        return this.getText(titulo);
+
+    public void clickIngresoRegistro() throws InterruptedException {
+        click(registerLink);
     }
 
-    public void escribirNombre(String name) throws InterruptedException {
-        sendText(name, nombre);
+
+
+    public void escribirNombre(String nombre) throws InterruptedException {
+        sendText(nombre, firstName);
     }
 
-    public void escribirApellido(String lastName) throws InterruptedException {
-        sendText(lastName, apellido);
+    public void escribirApellido(String apellido) throws InterruptedException {
+        sendText(apellido, lastName);
     }
 
-    public void escribirMail(String mail) throws InterruptedException {
-        sendText(mail, email);
+    public void escribirDireccion(String direccion) throws InterruptedException {
+        sendText(direccion, address);
     }
 
-    public void escribirContraseña(String clave) throws InterruptedException {
-        sendText(clave, contrasena);
+    public void escribirCiudad(String ciudad) throws InterruptedException {
+        sendText(ciudad, city);
     }
 
-    public void escribirConfirmarContraseña(String clave) throws InterruptedException {
-        sendText(clave, recontrasena);
+    public void escribirEstado(String estado) throws InterruptedException {
+        sendText(estado, state);
+    }
+
+    public void escribirCodigoPostal(String codigoPostal) throws InterruptedException {
+        sendText(codigoPostal, zipCode);
+    }
+
+    public void escribirTelefono(String telefono) throws InterruptedException {
+        sendText(telefono, phone);
+    }
+
+    public void escribirSSN(String ssnText) throws InterruptedException {
+        sendText(ssnText, ssn);
+    }
+
+    public void escribirUsuario(String usuario) throws InterruptedException {
+        sendText(usuario, username);
+    }
+
+    public void escribirPassword(String contrasena) throws InterruptedException {
+        sendText(contrasena, password);
+    }
+
+    public void escribirPasswordConfirm(String contrasenaConfirm) throws InterruptedException {
+        sendText(contrasenaConfirm, passwordConfirm);
     }
 
     public void clickRegistrarse() throws InterruptedException {
-        click(registrarseBtn);
+        click(registerSendButton);
     }
 
-    public String obtenerMensajeExito() throws InterruptedException {
-        System.out.println("Se creo la cuenta: " + getText(exito));
-        return this.getText(exito);
-    }
-
-    public String obtenerMensajeConfirmarMail() throws InterruptedException {
-        System.out.println("Valido el mensaje de confirmar mail: " + getText(confirmarMail));
-        return this.getText(confirmarMail);
-    }
-
-    public String obtenerMensajeNombreObligatorio() throws InterruptedException {
-        System.out.println("Verificar Nombre: " + getText(nombreObligatorio));
-        return this.getText(nombreObligatorio);
-    }
-
-    public String obtenerMensajeApellidoObligatorio() throws InterruptedException {
-        System.out.println("Verificar Apellido: " + getText(apellidoObligatorio));
-        return this.getText(apellidoObligatorio);
-    }
-
-    public String obtenerMensajeCorreoObligatorio() throws InterruptedException {
-        System.out.println("Verificar Correo: " + getText(mailObligatorio));
-        return this.getText(mailObligatorio);
-    }
-
-    public String obtenerMensajeContraseñaObligatorio() throws InterruptedException {
-        System.out.println("Verificar Contraseña: " + getText(contrasenaObligatorio));
-        return this.getText(contrasenaObligatorio);
-    }
-
-    public String obtenerMensajeConfirmarContraseñaObligatorio() throws InterruptedException {
-        System.out.println("Verificar Nombre: " + getText(recontrasenaObligatorio));
-        return this.getText(recontrasenaObligatorio);
-    }
-
-    public String obtenerMensajeCorreoRepetido() throws InterruptedException {
-        System.out.println("Verificar el mensaje de correo repetido: " + getText(mailRepetido));
-        return this.getText(mailRepetido);
+    public String obtenerMensajeRegistroOk() throws InterruptedException {
+        System.out.println("Me encuentro logueado correctamente: " + getText(okLoginMessage));
+        return this.getText(okLoginMessage);
     }
 }
