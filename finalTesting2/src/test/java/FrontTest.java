@@ -104,9 +104,46 @@ public class FrontTest {
 
 
              /*
-            -------------- Resumen de las cuentas -----------------
+            -------------- Resumen de las cuentas - Ingreso-----------------
              */
-            ExtentTest testAccountSumary = extent.createTest("Prueba de Resumen de cuenta");
+            ExtentTest testAccountSumaryIn = extent.createTest("Prueba de Resumen de cuenta");
+            test.log(Status.INFO, "Comienza el Test");
+            AccountSummaryPage  accountSummaryPageIn = new AccountSummaryPage(driver, wait);
+
+            accountSummaryPageIn.clickAccountOverview();
+            accountSummaryPageIn.obtenerMensajeBalanceSubjectTo();
+            Assertions.assertEquals("*Balance includes deposits that may be subject to holds", accountSummaryPageIn.obtenerMensajeBalanceSubjectTo());
+
+            test.log(Status.PASS, "Valido que aparezca el mensaje al pie sobre depositos sujetos a...");
+            System.out.println("El mensaje al pie sobre depositos sujetos a--- está ok.");
+
+
+
+              /*
+            ----------------- Transferir Fondos------------------
+             */
+            ExtentTest testFundTransfer = extent.createTest("Prueba de Transferencia de fondos");
+            test.log(Status.INFO, "Comienza el Test");
+            FundTransferPage  fundTransferPage = new FundTransferPage(driver, wait);
+
+            fundTransferPage.clickTransferenciaFondos();
+            fundTransferPage.obtenerTitleTransferFunds();
+            Assertions.assertEquals("Transfer Funds", fundTransferPage.obtenerTitleTransferFunds());
+
+            fundTransferPage.ingresarImporteATransferir("650");
+            fundTransferPage.selectAccount();
+            fundTransferPage.selectToAccount();
+            fundTransferPage.clickTransferenciaFondos();
+            fundTransferPage.obtenerTitleTransferComplete();
+            Assertions.assertEquals("Transfer Complete!", fundTransferPage.obtenerTitleTransferComplete());
+
+
+
+             /*
+
+            -------------- Resumen de las cuentas - Actividad de las cuentas-----------------
+             */
+            ExtentTest testAccountSumaryActivity = extent.createTest("Prueba de Actividad en Resumen de cuenta");
             test.log(Status.INFO, "Comienza el Test");
             AccountSummaryPage  accountSummaryPage = new AccountSummaryPage(driver, wait);
 
@@ -117,27 +154,20 @@ public class FrontTest {
             test.log(Status.PASS, "Valido que aparezca el mensaje al pie sobre depositos sujetos a...");
             System.out.println("El mensaje al pie sobre depositos sujetos a--- está ok.");
 
+            accountSummaryPage.clickMyAccount();
+            accountSummaryPage.obtenerTituloAccountDetails();
+            Assertions.assertEquals("Account Details", accountSummaryPage.obtenerTituloAccountDetails());
+            test.log(Status.PASS, "Valido que aparezca el título Account Details");
+            System.out.println("El título Account Details está ok.");
 
-            /*
-            ----------------- Transferir Fondos------------------
-             */
-            ExtentTest testFundTransfer = extent.createTest("Prueba de Transferencia de fondos");
-            test.log(Status.INFO, "Comienza el Test");
-            FundTransferPage  fundTransferPage = new FundTransferPage(driver, wait);
+            accountSummaryPage.selectActivityPeriodAll();
+            accountSummaryPage.selectAccountActivityTypeAll();
+            accountSummaryPage.clickGo();
 
 
 
-            /*
 
-             Account1  = By.xpath("//*[@id=\"accountTable\"]/tbody/tr[1]/td[1]/a");
-             Account2  = By.xpath("//*[@id=\"accountTable\"]/tbody/tr[2]/td[1]/a");
-             titleAccountDetails  = By.xpath("//*[@id=\"rightPanel\"]/div/div[1]/h1");
-             accountActivityPeriodSelect  = By.id("month");
-             accountActivityPeriodOptionAll = By.xpath("//*[@id=\"month\"]/option[1]");
-             accountActivityTypeSelect = By.id("transactionType");
-             accountActivityTypeSelectAll = By.xpath("//*[@id=\"transactionType\"]/option[1]");
-             goButton= By.xpath("//*[@id=\"rightPanel\"]/div/div[2]/form/table/tbody/tr[3]/td[2]/input");
-*/
+
 
 
         } catch (AssertionError error) {
