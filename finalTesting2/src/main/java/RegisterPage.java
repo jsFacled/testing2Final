@@ -1,10 +1,14 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class RegisterPage extends BasePage{
+public class RegisterPage extends BasePage {
 
     private By registerLink = By.xpath("//a[normalize-space()='Register']");
+
+
     private By  firstName = By.id("customer.firstName");
     private By  lastName = By.id("customer.lastName");
     private By  address = By.id("customer.address.street");
@@ -21,6 +25,11 @@ public class RegisterPage extends BasePage{
 
     private By okLoginMessage = By.xpath("//*[@id=\"rightPanel\"]/p");
 
+    //p[contains(text(),'If you have an account with us you can sign-up for')]
+    //*[@id="rightPanel"]/p/text()
+
+    //p[contains(text(),'Your account was created successfully. You are now')]
+    //*[@id="rightPanel"]/p
 
 
 
@@ -83,8 +92,14 @@ public class RegisterPage extends BasePage{
         click(registerSendButton);
     }
 
-    public String obtenerMensajeRegistroOk() throws InterruptedException {
-        System.out.println("Me encuentro logueado correctamente: " + getText(okLoginMessage));
-        return this.getText(okLoginMessage);
+    public String obtenerMensajeRegistroOk() {
+        // Espera explícita para esperar a que el elemento del mensaje esté presente
+        WebElement mensajeElement = wait.until(ExpectedConditions.presenceOfElementLocated(okLoginMessage));
+
+        // Obtén el texto del elemento del mensaje
+        String mensaje = mensajeElement.getText();
+
+        System.out.println("Me encuentro logueado correctamente: " + mensaje);
+        return mensaje;
     }
 }

@@ -36,6 +36,7 @@ public class BasePage {
     }
 
     protected void sendText(String imputText, By locator) throws InterruptedException {
+
         this.elementFind(locator).clear();
         this.elementFind(locator).sendKeys(imputText);
     }

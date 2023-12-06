@@ -1,6 +1,8 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AccountSummaryPage {
+public class AccountSummaryPage extends BasePage{
 
     private By accountsOverview  = By.xpath("//a[normalize-space()='Accounts Overview']\n");
     private By footBalanceSubjectTo   = By.xpath("//*[@id=\"accountTable\"]/tfoot/tr/td\n");
@@ -15,6 +17,9 @@ public class AccountSummaryPage {
 
 
 
+    public AccountSummaryPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
+    }
 
 
 
