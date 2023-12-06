@@ -85,7 +85,7 @@ public class FrontTest {
 
 
     @Test
-    @Tag("Registro")
+    @Tag("NewAccount")
     @Tag("ALL")
     public void NewAccountPageTest() throws InterruptedException {
         ExtentTest test = extent.createTest("Prueba de Abrir una nueva cuenta");
@@ -93,17 +93,17 @@ public class FrontTest {
         NewAccountPage newAccountPage = new NewAccountPage(driver, wait);
 
         try {
-            newAccountPage.;
+             newAccountPage.clickLinkAbrirCuentaNueva();
+            test.log(Status.PASS, "Ingreso a newAccount exitosamente.");
+
+             newAccountPage.selectSavingsType();
+             newAccountPage.clickButtonAbrirCuentaNueva();
+             newAccountPage.obtenerMensajeNewAccountOk();
+
+            Assertions.assertEquals("Congratulations, your account is now open.", newAccountPage.obtenerMensajeNewAccountOk());
 
 
-            test.log(Status.PASS, "Completo los datos de registro de forma correcta");
-
-
-
-            Assertions.assertEquals("Your account was created successfully. You are now logged in.", registerPage.obtenerMensajeRegistroOk());
-
-            test.log(Status.PASS, "Ingreso a la página de Registro");
-            test.log(Status.PASS, "Valido que el registro se haya hecho de forma exitosa");
+            test.log(Status.PASS, "Valido que la apertura de nueva cuenta se haya hecho de forma exitosa");
 
 
         } catch (AssertionError error) {
