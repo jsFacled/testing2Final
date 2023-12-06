@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -51,6 +52,9 @@ public class FrontTest {
         RegisterPage registerPage = new RegisterPage(driver, wait);
 
         try {
+            /*
+            -------------- Registro -----------------
+             */
             registerPage.clickIngresoRegistro();
 
 
@@ -76,36 +80,66 @@ public class FrontTest {
             test.log(Status.PASS, "Ingreso a la página de Registro");
             test.log(Status.PASS, "Valido que el registro se haya hecho de forma exitosa");
 
-
-        } catch (AssertionError error) {
-            test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
-            throw error;
-        }
-    }
+            /*
+            -------------- New account -----------------
+             */
 
 
-    @Test
-    @Tag("NewAccount")
-    @Tag("ALL")
-    public void NewAccountPageTest() throws InterruptedException {
-        ExtentTest test = extent.createTest("Prueba de Abrir una nueva cuenta");
+        ExtentTest testNewAccount = extent.createTest("Prueba de Abrir una nueva cuenta");
         test.log(Status.INFO, "Comienza el Test");
         NewAccountPage newAccountPage = new NewAccountPage(driver, wait);
 
-        try {
              newAccountPage.clickLinkAbrirCuentaNueva();
             test.log(Status.PASS, "Ingreso a newAccount exitosamente.");
+            System.out.println("Ingreso a newAccount exitosamente.");
 
              newAccountPage.selectSavingsType();
              newAccountPage.clickButtonAbrirCuentaNueva();
+
              newAccountPage.obtenerMensajeNewAccountOk();
-
             Assertions.assertEquals("Congratulations, your account is now open.", newAccountPage.obtenerMensajeNewAccountOk());
-
 
             test.log(Status.PASS, "Valido que la apertura de nueva cuenta se haya hecho de forma exitosa");
 
 
+
+             /*
+            -------------- Resumen de las cuentas -----------------
+             */
+            ExtentTest testAccountSumary = extent.createTest("Prueba de Resumen de cuenta");
+            test.log(Status.INFO, "Comienza el Test");
+            AccountSummaryPage  accountSummaryPage = new AccountSummaryPage(driver, wait);
+
+            accountSummaryPage.clickAccountOverview();
+            accountSummaryPage.obtenerMensajeBalanceSubjectTo();
+            Assertions.assertEquals("*Balance includes deposits that may be subject to holds", accountSummaryPage.obtenerMensajeBalanceSubjectTo());
+
+            test.log(Status.PASS, "Valido que aparezca el mensaje al pie sobre depositos sujetos a...");
+            System.out.println("El mensaje al pie sobre depositos sujetos a--- está ok.");
+
+
+            /*
+            ----------------- Transferir Fondos------------------
+             */
+            ExtentTest testFundTransfer = extent.createTest("Prueba de Transferencia de fondos");
+            test.log(Status.INFO, "Comienza el Test");
+            FundTransferPage  fundTransferPage = new FundTransferPage(driver, wait);
+
+
+
+            /*
+
+             Account1  = By.xpath("//*[@id=\"accountTable\"]/tbody/tr[1]/td[1]/a");
+             Account2  = By.xpath("//*[@id=\"accountTable\"]/tbody/tr[2]/td[1]/a");
+             titleAccountDetails  = By.xpath("//*[@id=\"rightPanel\"]/div/div[1]/h1");
+             accountActivityPeriodSelect  = By.id("month");
+             accountActivityPeriodOptionAll = By.xpath("//*[@id=\"month\"]/option[1]");
+             accountActivityTypeSelect = By.id("transactionType");
+             accountActivityTypeSelectAll = By.xpath("//*[@id=\"transactionType\"]/option[1]");
+             goButton= By.xpath("//*[@id=\"rightPanel\"]/div/div[2]/form/table/tbody/tr[3]/td[2]/input");
+*/
+
+
         } catch (AssertionError error) {
             test.log(Status.FAIL, "Fallo la validación: " + error.getLocalizedMessage());
             throw error;
@@ -114,11 +148,10 @@ public class FrontTest {
 
 
 
-
-
     @AfterEach
-    public void cerrar() {
+    public void cerrar() throws InterruptedException {
         RegisterPage registerPage = new RegisterPage(driver, wait);
+        Thread.sleep(5000);
         registerPage.close();
     }
 

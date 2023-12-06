@@ -18,4 +18,10 @@ public class FundTransferPage extends BasePage {
         super(driver, wait);
     }
 
+
+    public void clickTransferenciaFondos() throws InterruptedException {
+        click(transferFundsLink);
+    }
+
+
 }

@@ -8,7 +8,7 @@ public class NewAccountPage extends BasePage {
 
     private By openNewAccount  = By.xpath("//a[normalize-space()='Open New Account']\n");
     private By  savingsType= By.id("type");
-    private By  checkingType= By.xpath("//*[@id=\"type\"]/option[2]/text()\n");
+    private By  checkingType= By.xpath("//*[@id=\"type\"]/option[2]\n");
     private By openNewAccountButton  = By.xpath("//input[@value='Open New Account']");
     private By  okNewAccountMessage = By.xpath("//*[@id=\"rightPanel\"]/div/div/p[1]\n");
 
@@ -22,6 +22,7 @@ public class NewAccountPage extends BasePage {
     }
     public void selectSavingsType() throws InterruptedException {
         click(checkingType);
+        Thread.sleep(300);
         click(savingsType);
     }
 

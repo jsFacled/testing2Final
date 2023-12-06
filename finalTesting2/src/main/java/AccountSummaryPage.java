@@ -1,5 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AccountSummaryPage extends BasePage{
@@ -21,6 +23,22 @@ public class AccountSummaryPage extends BasePage{
         super(driver, wait);
     }
 
+
+
+    public void clickAccountOverview() throws InterruptedException {
+        click(accountsOverview);
+    }
+
+
+    public String obtenerMensajeBalanceSubjectTo() {
+        // Espera explícita para esperar a que el elemento del mensaje esté presente
+        WebElement mensajeElement = wait.until(ExpectedConditions.presenceOfElementLocated(footBalanceSubjectTo));
+
+        // Obtén el texto del elemento del mensaje
+        String mensaje = mensajeElement.getText();
+
+        return mensaje;
+    }
 
 
 
